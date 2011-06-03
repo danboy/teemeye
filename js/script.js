@@ -77,12 +77,7 @@ TMI.viewer.prototype = {
     this.next();
   },
   next: function(index,MAX){
-    console.log(MAX);
-    for(i=0;i < MAX,i++;){
-      console.log(MAX,i);
-      $($('iframe')[i]).hide();
-      console.log($($('iframe')[i]));
-    }
+    $('iframe').hide();
     console.log(index);
     this.animate($('iframe')[index]);
   },
