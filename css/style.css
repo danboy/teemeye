@@ -162,11 +162,124 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
  *
  * Author: 
  */
+#config{
+  width: 500px;
+  margin: 100px auto;
+  background: #333;
+  z-index: 9999;
+  padding: 20px;
+  border-radius: 6px;
+  border: 8px solid rgba(0,0,0,.5);
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(255,255,255)),
+    color-stop(.5, rgb(221,221,221))
+  );
+  background-image: -moz-linear-gradient(
+    center bottom,
+    rgb(255,255,255) 0%,
+    rgb(221,221,221) 50%
+  );
+}
+.input input{
+  border: 1px solid #ccc;
+  font-size: 1.6em;
+  margin: 10px 0;
+}
+.input #name{
+  width: 100px;
+  clear: both;
+  display: block;
+}
+#config ul{
+  margin:0;
+}
+#config ul li{
+  list-style: none;
+  font-size: 1.8em;
+  margin: 0;
+  padding: 10px 0;
+  color: rgba(172,90,36,1);;
+  font-weight: bold;
+  border-bottom: 1px dotted #666;
+  text-shadow: 1px 1px #fff;
+}
+#config ul li:last-child{
+  margin-bottom: 20px;
+}
+#config ul li a{
+  display: inline-block;
+  margin: 0 5px;
+  float: right;
+}
+.input a{
+  padding: 2px 5px;
+  margin: 5px;
+  line-height: 1.8em;
+  border-radius: 4px;
+  border: 2px solid rgba(0,0,0,.5);
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(255,255,255)),
+    color-stop(.5, rgb(221,221,221))
+  );
+  background-image: -moz-linear-gradient(
+    center bottom,
+    rgb(255,255,255) 0%,
+    rgb(221,221,221) 50%
+  );
+}
 
+.start{
+  font-size: 1.8em;
+  padding: 0 10px;
+  margin: 5px;
+  line-height: 1.8em;
+  border-radius: 15px;
+  border: 1px solid rgba(172,90,36,1);
+  color: #EEE;
+  text-shadow: 1px 1px rgba(172,90,36,1);
+  font-weight: bold;
+  display: inline-block;
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(172,90,36)),
+    color-stop(.3, rgb(220,140,86)),
+    color-stop(.6, rgb(172,90,36))
+  );
+  background-image: -moz-linear-gradient(
+    center bottom,
+    rgb(255,255,255) 0%,
+    rgb(221,221,221) 50%
+  );
+}
 
-
-
-
+.start:hover{
+  border: 1px solid rgba(172,90,36,1);
+  color: #FFF;
+  text-shadow: 1px 1px rgba(172,90,36,1);
+  font-weight: bold;
+  display: inline-block;
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(220,140,86)),
+    color-stop(.3, rgb(172,90,36)),
+    color-stop(.6, rgb(220,140,86))
+  );
+  background-image: -moz-linear-gradient(
+    center bottom,
+    rgb(255,255,255) 0%,
+    rgb(221,221,221) 50%
+  );
+}
 
 
 

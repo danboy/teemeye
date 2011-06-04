@@ -22,19 +22,21 @@ TMI.viewer.prototype = {
     $('<div/>',{'id': 'config'}).appendTo('body');
     $('<ul/>').appendTo('#config');
     this.load();
-    this.new();
+    this.drawForm();
   },
   addPage: function( key, url ){
     console.log('build');
     $('<iframe/>',{ 'src': url, 'id': key,'style':'width:100%;height:100%'}).appendTo('body');
   },
-  new: function(){
+  drawForm: function(){
     var _this=this;
     var div = $('<div/>',{'class': 'input'});
     $('<input/>',{'type':'text','id':'name'}).appendTo(div);
     $('<input/>',{'type':'text','id':'url'}).appendTo(div);
     $('<a/>',{'text':'add'}).click(function(){_this.create();}).appendTo(div);
     div.appendTo('#config');
+    var speed = $('<div/>',{'class': 'input'}).appendTo('#config');
+    $('<input/>',{'type':'text','id':'speed','style': 'width:30px;'}).appendTo(speed);
     $('<a/>',{'class':'start','text': 'start'}).click(function(){_this.start();}).appendTo('#config');
   },
   create: function(){
@@ -66,10 +68,14 @@ TMI.viewer.prototype = {
   },
   list: function( name, url ){
    _this = this;
-   var li = $('<li/>',{ 'id':name, 'text': name + ': ' + url }).appendTo('#config ul');
+   var li = $('<li/>',{ 'id':name, 'text': name + ':'}).appendTo('#config ul');
    $('<a/>',{ 'text':'remove'}).click(function(){_this.destroy(name)}).appendTo(li);
   },
   start: function(){
+    delete(this.sites['updated_at']);
+    if($('#speed').val()){
+      this.options.speed = $('#speed').val();
+    }
     for (key in this.sites) {
       this.addPage(key, this.sites[key]);
     }
@@ -85,7 +91,7 @@ TMI.viewer.prototype = {
     _this = this;
     $(iframe).show();
     setTimeout(function(){_this.next(_this.index,MAX)},this.options.speed);
-    if (this.index > MAX-1){
+    if (this.index >= MAX-1){
       this.index = 0; 
     }else{
       this.index++;
@@ -94,4 +100,4 @@ TMI.viewer.prototype = {
 
 }
 
-new TMI.viewer({speed: 2000});
+new TMI.viewer();
