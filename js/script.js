@@ -80,7 +80,7 @@ TMI.viewer.prototype = {
       this.addPage(key, this.sites[key]);
     }
     $('#config').hide();
-    this.next();
+    this.next(0,MAX);
   },
   next: function(index,MAX){
     $('iframe').hide();
