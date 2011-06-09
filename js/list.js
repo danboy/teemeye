@@ -37,13 +37,14 @@ TMI.list.prototype = {
     var index = this.getIndex(key);
     if(this.todolist.items.length == 1)
       this.todolist.items = [];
-    this.todolist.items.splice(index,index);
-    $('#'+key).remove();
+    console.log(index);
+    this.todolist.items.splice(index,1);
+    $('#'+this.toClass(key)).remove();
     this.db.save(this.options.list,this.todolist);
   },
   load: function(){
     var _this = this;
-    this.todolist = this.db.get(this.options.list) || {};
+    this.todolist = this.db.get(this.options.list) || {'items':[]};
     $(this.todolist.items).each(function(index,item){
       _this.list(item);
     });
@@ -65,7 +66,7 @@ TMI.list.prototype = {
   list: function( item ){
     var _this = this;
     $('#todos').append(
-      $('<li/>',{'text':item,'id':item}).click(function(){_this.destroy(item);})
+      $('<li/>',{'text':item,'id': _this.toClass(item)}).append($('<a/>',{'text':'-'}).click(function(){_this.destroy(item);}))
     )
   },
   getIndex: function(key){
@@ -89,6 +90,11 @@ TMI.list.prototype = {
       while (e = r.exec(q)){
         this.params[d(e[1])] = d(e[2]);
       }
+  },
+  toClass: function(item){
+    item = item.replace(/ /g,"");
+    item = item.replace(/[^a-zA-Z 0-9]+/g,'');
+    return item;
   }
 
 }

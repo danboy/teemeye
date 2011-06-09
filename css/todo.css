@@ -185,6 +185,10 @@ ul li:after{
   margin: 0;
   font-size: .5em;
 }
+ul li a{
+  display: block;
+  float: right;
+}
 .start{
   font-size: 1.8em;
   padding: 0 10px;
