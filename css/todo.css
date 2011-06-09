@@ -166,17 +166,23 @@ div input{
   border:none;
   border-bottom: 1px solid #CCC;
   font-size: 4em;
+  font-family: 'Cabin Sketch', arial, serif;
 }
 div input[type=submit]{
   background: #fff;
   color: green;
   font-weight: bold;
+  border: none;
 }
 ul li{
   list-style: none;
   font-size: 5em;
   margin: 0 0 40px;
   font-family: 'Cabin Sketch', arial, serif;
+}
+ul li.checked{
+  text-decoration: line-through;
+  color: #dfdfdf;
 }
 ul li:after{
   content: '.';
@@ -185,9 +191,17 @@ ul li:after{
   margin: 0;
   font-size: .5em;
 }
+ul li.checked a{
+  text-decoration: none;
+}
 ul li a{
   display: block;
   float: right;
+  cursor: pointer;
+}
+ul li a.check{
+  float: left;
+  color: #DDD;
 }
 .start{
   font-size: 1.8em;

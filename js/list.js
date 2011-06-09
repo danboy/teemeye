@@ -7,24 +7,25 @@ if (typeof TMI == 'undefined') {
 };
 
 TMI.list = function(options){
-  var _this = this;
   this.getParams();
   this.options = $.extend({
     list: this.params['list'] || "default" 
   },options);
-  this.db = new TMI.storage();
-  this.todolist = this.load() ;
-  $('#add').click(function(){_this.create();});
-  $('#item').keypress(
-    function(ev){
-      if(ev.charCode == 13){
-        _this.create();
-      }
-  });
+  this.init();
 }
 
 TMI.list.prototype = {
-  configure: function(){
+  init: function(){
+    var _this = this;
+    this.db = new TMI.storage();
+    this.todolist = this.load() ;
+    $('#add').click(function(){_this.create();});
+    $('#item').keypress(
+      function(ev){
+        if(ev.charCode == 13){
+          _this.create();
+        }
+    });
   },
   create: function(){
     var item = $('#item').val();
@@ -66,8 +67,16 @@ TMI.list.prototype = {
   list: function( item ){
     var _this = this;
     $('#todos').append(
-      $('<li/>',{'text':item,'id': _this.toClass(item)}).append($('<a/>',{'text':'-'}).click(function(){_this.destroy(item);}))
+      $('<li/>',{'text':item,'id': _this.toClass(item)}).append($('<a/>',{'text':'-'}).click(function(){_this.destroy(item);})).prepend($('<a/>',{'text':'[]','class':'check'}).click(function(){_this.check(item);}))
     )
+  },
+  check: function(item){
+    var item = $('#'+this.toClass(item))
+    if(item.hasClass('checked')){
+      item.removeClass('checked');
+    }else{
+      item.addClass('checked');
+    }
   },
   getIndex: function(key){
     var index = -1
