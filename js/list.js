@@ -54,6 +54,7 @@ TMI.list.prototype = {
       this.todolist.items = [];
     }
     return this.todolist;
+    $('#todos').sortable();
   },
   size: function(){
     var size = 0, key;

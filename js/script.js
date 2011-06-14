@@ -83,21 +83,37 @@ TMI.viewer.prototype = {
     this.next(0,MAX);
   },
   next: function(index,MAX){
-    $('iframe').hide();
-    console.log(index);
     this.animate($('iframe')[index]);
   },
   animate: function(iframe){
     _this = this;
-    $(iframe).show();
-    setTimeout(function(){_this.next(_this.index,MAX)},this.options.speed);
+    this.forward();
+    this.timer = setTimeout(function(){_this.next(_this.index,MAX)},this.options.speed);
+  },
+  pause: function(){
+    clearTimeout(this.timer);
+  },
+  forward: function(){
+    _this = this;
+    $('iframe').hide();
+    $($('iframe')[this.index]).show();
+    this.increment();
+  },
+  increment: function(){
     if (this.index >= MAX-1){
       this.index = 0; 
     }else{
       this.index++;
     };
+  },
+  keyObserver: function(key , callback){
+    $('window').keypress(
+      function(ev){
+        if(ev.charCode == key){
+          callback();
+        }
+    });
   }
-
 }
 
-new TMI.viewer();
+t = new TMI.viewer();
