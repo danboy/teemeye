@@ -20,7 +20,7 @@ TMI.viewer = function(options){
 TMI.viewer.prototype = {
   configure: function(){
     $('<div/>',{'id': 'config'}).appendTo('body');
-    $('<ul/>').appendTo('#config');
+    $('<ul/>',{'id':'pages'}).appendTo('#config');
     this.load();
     this.drawForm();
   },
@@ -40,11 +40,17 @@ TMI.viewer.prototype = {
     $('<a/>',{'class':'start','text': 'start'}).click(function(){_this.start();}).appendTo('#config');
   },
   create: function(){
-    this.sites[$('#name').val()] = $('#url').val();
+    this.sites[$('#name').val()] = { 'url': $('#url').val(),'timeout': ($('#speed').val()*1000), 'position': this.sites.length+1};
     this.list($('#name').val(),$('#url').val());
     this.db.save('TMI',this.sites);
     $('.input input').val('');
     MAX = this.size();
+  },
+  edit: function(key){
+    $('#name').val(key);
+    $('#url').val(this.sites[key].url);
+    $('#speed').val(this.sites[key].timeout);
+    this.destroy(key);
   },
   destroy: function(key){
     delete(this.sites[key]);
@@ -52,12 +58,26 @@ TMI.viewer.prototype = {
     this.db.save('TMI',this.sites);
   },
   load: function(){
+    _this = this;
     this.sites = this.db.get('TMI') || {};
     delete(this.sites['updated_at']);
     for(key in this.sites){
-      this.list( key, this.sites[key] );
+      this.list( key , this.sites[key]);
     };
     MAX = this.size();
+    $('#pages').sortable({
+      update: function(item,index){_this.sort(item,index)}
+    });
+  },
+  sort: function(item,index){
+    _this = this;
+    this.sites = {};
+    $('#pages li').each(function( index, page){
+      data = $(page).data('info');
+      data.position = index;
+      _this.sites[$(page).attr('id')] = data;
+    });
+    this.db.save('TMI',this.sites);
   },
   size: function(){
     var size = 0, key;
@@ -66,9 +86,9 @@ TMI.viewer.prototype = {
     }
     return size;
   },
-  list: function( name, url ){
+  list: function( name, site){
    _this = this;
-   var li = $('<li/>',{ 'id':name, 'text': name + ':'}).appendTo('#config ul');
+   var li = $('<li/>',{ 'id':name, 'text': name + ':'}).data('info', site).appendTo('#config ul');
    $('<a/>',{ 'text':'remove'}).click(function(){_this.destroy(name)}).appendTo(li);
   },
   start: function(){
@@ -77,18 +97,18 @@ TMI.viewer.prototype = {
       this.options.speed = $('#speed').val();
     }
     for (key in this.sites) {
-      this.addPage(key, this.sites[key]);
+      this.addPage(key, this.sites[key].url);
     }
     $('#config').hide();
     this.next(0,MAX);
   },
-  next: function(index,MAX){
+  next: function(index){
     this.animate($('iframe')[index]);
   },
   animate: function(iframe){
     _this = this;
     this.forward();
-    this.timer = setTimeout(function(){_this.next(_this.index,MAX)},this.options.speed);
+    this.timer = setTimeout(function(){_this.next(_this.index)},this.options.speed);
   },
   pause: function(){
     clearTimeout(this.timer);
