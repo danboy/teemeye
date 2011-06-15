@@ -31,13 +31,14 @@ TMI.viewer.prototype = {
   drawForm: function(){
     var _this=this;
     var div = $('<div/>',{'class': 'input'});
-    $('<input/>',{'type':'text','id':'name'}).appendTo(div);
-    $('<input/>',{'type':'text','id':'url'}).appendTo(div);
+    $('<input/>',{'type':'text','id':'name', 'title': 'site name'}).appendTo(div);
+    $('<input/>',{'type':'text','id':'url', 'title': 'http://domain.com'}).appendTo(div);
     $('<a/>',{'text':'add'}).click(function(){_this.create();}).appendTo(div);
     div.appendTo('#config');
     var speed = $('<div/>',{'class': 'input'}).appendTo('#config');
-    $('<input/>',{'type':'text','id':'speed','style': 'width:30px;'}).appendTo(speed);
+    $('<input/>',{'type':'text','id':'speed','style': 'width:30px;', 'title': 'seconds'}).appendTo(speed);
     $('<a/>',{'class':'start','text': 'start'}).click(function(){_this.start();}).appendTo('#config');
+    $('input').setTitle();
   },
   create: function(){
     this.sites[$('#name').val()] = { 'url': $('#url').val(),'timeout': ($('#speed').val()*1000), 'position': this.sites.length+1};
@@ -136,4 +137,22 @@ TMI.viewer.prototype = {
   }
 }
 
+  jQuery.fn.setTitle = function(){
+    this.each(function(index,input){
+      input = $(input);
+      input.addClass('untouched');
+      console.log(input);
+      input.val(input.attr('title'));
+      input.focus(function(){
+        input.val('');
+        input.removeClass('untouched');
+      });
+      input.blur(function(){
+        if(input.val() == ''){
+          input.val(input.attr('title'));
+          input.addClass('untouched');
+        };
+      });
+    });
+  }
 t = new TMI.viewer();

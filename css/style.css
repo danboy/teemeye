@@ -188,6 +188,9 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
   font-size: 1.6em;
   margin: 10px 0;
 }
+input.untouched{
+  color: #DDD;
+}
 .input #name{
   width: 100px;
   clear: both;
