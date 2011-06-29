@@ -94,7 +94,7 @@ TMI.viewer.prototype = {
   },
   start: function(){
     delete(this.sites['updated_at']);
-    if($('#speed').val()){
+    if($('#speed').val() && parseInt($('#speed').val())){
       this.options.speed = $('#speed').val();
     }
     for (key in this.sites) {
