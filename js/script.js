@@ -112,9 +112,17 @@ TMI.viewer.prototype = {
     this.timer = setTimeout(function(){_this.next(_this.index)},this.options.speed);
   },
   pause: function(){
+    _this = this;
+    $('<div/>',{'id':'pause', 'text':'>'}).click(function(){
+      console.log(this);
+      $(this).remove();
+      _this.animate();
+      console.log('remove');
+    }).appendTo('body');
     clearTimeout(this.timer);
   },
   forward: function(){
+    this.pause();
     _this = this;
     $('iframe').hide();
     $($('iframe')[this.index]).show();
